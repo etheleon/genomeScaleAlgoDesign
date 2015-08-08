@@ -29,6 +29,7 @@ eg. protein sequence MRQFL
 package main
 
 import "fmt"
+import "strings"
 
 func main() {
 	codonTable := map[string][]string{
@@ -38,8 +39,17 @@ func main() {
 		"f": []string{"UUU", "UUC"},
 		"l": []string{"UUA", "UUG", "CUU", "CUC", "CUA", "CUG"},
 	}
+	peptide := []string{"M", "R", "F", "L"}
 
-	for k := range codonTable {
-		fmt.Println(k)
+	for aaIndex, aa := range peptide {
+		for codonIndex, codon := range codonTable[strings.ToLower(aa)] {
+			fmt.Println(aa, codon)
+		}
 	}
+
+	//for key, value := range codonTable {
+	//for _, element := range value {
+	//fmt.Println(key, element)
+	//}
+	//}
 }
