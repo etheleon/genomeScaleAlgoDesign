@@ -31,25 +31,35 @@ package main
 import "fmt"
 import "strings"
 
-func main() {
-	codonTable := map[string][]string{
-		"m": []string{"AUG"},
-		"r": []string{"CGG", "CGA", "CGC", "CGU", "AGG", "AGA"},
-		"q": []string{"CAG", "CAA"},
-		"f": []string{"UUU", "UUC"},
-		"l": []string{"UUA", "UUG", "CUU", "CUC", "CUA", "CUG"},
-	}
-	peptide := []string{"M", "R", "F", "L"}
+var codonTable = map[string][]string{
+	"m": []string{"AUG"},
+	"r": []string{"CGG", "CGA", "CGC", "CGU", "AGG", "AGA"},
+	"q": []string{"CAG", "CAA"},
+	"f": []string{"UUU", "UUC"},
+	"l": []string{"UUA", "UUG", "CUU", "CUC", "CUA", "CUG"},
+}
 
-	for aaIndex, aa := range peptide {
-		for codonIndex, codon := range codonTable[strings.ToLower(aa)] {
-			fmt.Println(aa, codon)
+var peptide = []string{"M", "R", "F", "L"}
+
+func recurse(prevSeq string, aa []string) int {
+	if len(aa) == 0 {
+		fmt.Println("Seq: ", prevSeq)
+		return 1
+	} else {
+		for _, codon := range codonTable[strings.ToLower(aa[0])] {
+			newSeq := strings.Join(append([]string{prevSeq}, codon), "")
+			recurse(newSeq, aa[1:])
 		}
 	}
-
-	//for key, value := range codonTable {
-	//for _, element := range value {
-	//fmt.Println(key, element)
-	//}
-	//}
+	return 1
 }
+
+func main() {
+	recurse("", peptide)
+}
+
+//for key, value := range codonTable {
+//for _, element := range value {
+//fmt.Println(key, element)
+//}
+//}
