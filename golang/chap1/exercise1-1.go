@@ -4,8 +4,10 @@ Task1: Write a program that lists all the DNA sequences that encode a given prot
 
 package main
 
-import "fmt"
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
 
 var codonTable = map[string][]string{
 	"stop": []string{"UAA", "UAG", "UGA"},
@@ -31,7 +33,7 @@ var codonTable = map[string][]string{
 	"k":    []string{"AAA", "AAG"},
 }
 
-var peptide = []string{"M", "R", "F", "L"}
+//var peptide = []string{"M", "R", "F", "L"}
 
 var grandList = []string{}
 
@@ -53,6 +55,12 @@ func recurse(prevSeq string, aa []string) int {
 }
 
 func main() {
+	fmt.Print("Input protein: ")
+	var proteinSeq string //empty
+	fmt.Scanln(&proteinSeq)
+	fmt.Println("This was the input protein sequence:", proteinSeq)
+
+	peptide := strings.Split(proteinSeq, "")
 	recurse("", peptide)
 	for i, seq := range grandList {
 		i = i + 1
